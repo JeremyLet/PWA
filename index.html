@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Bon de Travail PWA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+
+    <!-- Section pour l'identification de l'utilisateur -->
+    <div id="userSection">
+        <label for="username">Indiquer votre nom</label>
+        <input type="text" id="username" placeholder="Entrez votre nom" required>
+        <button id="saveUsername">Enregistrer</button>
+    </div>
+
+    <div id="formSection" style="display: none;">
+
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Formulaire de Travail</h2>
+
+            <form action="" method="post" class="space-y-4" id="form">
+                <div>
+                    <label for="nomClient" class="block text-gray-700 font-semibold">Nom du client :</label>
+                    <input type="text" id="nomClient" name="nomClient"
+                        pattern="^[A-Za-zÀ-ÖØ-öø-ÿ ]{2,99}(-[A-Za-zÀ-ÖØ-öø-ÿ ]{1,98})?$"
+                        title="Le nom doit contenir entre 3 et 99 caractères, seulement des lettres et un seul tiret."
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                </div>
+
+                <div>
+                    <label for="date_prestation" class="block text-gray-700 font-semibold">Date Prestation :</label>
+                    <input type="text" id="date_prestation" name="date_prestation" required><br><br>
+                </div>
+
+                <script>
+                    flatpickr("#date_prestation", {
+                        locale: "fr",
+                        weekNumbers: true,
+                        defaultDate: "today",
+                        dateFormat: "d/m/Y",
+                        maxDate: "today",
+                        minDate: new Date().fp_incr(-7),
+                        onReady: function (selectedDates, dateStr, instance) {
+                            let currentDate = new Date();
+                            instance.jumpToDate(currentDate);
+                        }
+                    });
+                </script>
+
+                <div>
+                    <label for="prestation" class="block text-gray-700 font-semibold">Prestation réalisée :</label>
+                    <select id="prestation" name="prestation" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="" disabled selected>Sélectionnez une prestation</option>
+                        <option value="semi">Semi</option>
+                        <option value="moisson">Moisson</option>
+                        <option value="labourage">Labourage</option>
+                        <option value="epandage">Épandage</option>
+                        <option value="ensillage">Ensillage</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="quantite" class="block text-gray-700 font-semibold">Nombre d'heures / hectares :</label>
+                    <input type="number" id="quantite" name="quantite" min="1" max="99"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold">Travail terminé ?</label>
+                    <div id="finiBloc" class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" id="oui" name="travailTermine" value="oui" required
+                                class="form-radio text-indigo-600">
+                            <span class="ml-2">Oui</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" id="non" name="travailTermine" value="non" required
+                                class="form-radio text-indigo-600">
+                            <span class="ml-2">Non</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="observations" class="block text-gray-700 font-semibold">Observations :</label>
+                    <textarea id="observations" name="observations" rows="4"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                </div>
+
+                <div class="flex items-center justify-center">
+                    <button type="submit"
+                        class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Envoyer
+                    </button>
+                </div>
+                <div id="messageContainer" class="hidden text-center text-xl font-semibold mt-4"></div>
+            </form>
+            <footer>
+                <p>Statut réseau : <span id="networkStatus" class="text-green-600 font-bold">En ligne</span></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/PWA/main.js"></script>
+
+</body>
+
+</html>
