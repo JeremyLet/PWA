@@ -19,7 +19,8 @@
     <!-- Section pour l'identification de l'utilisateur -->
     <div id="userSection">
         <label for="username">Indiquer votre nom</label>
-        <input type="text" id="username" placeholder="Entrez votre nom" required>
+        <input type="text" id="username" placeholder="Entrez votre nom" required
+            pattern="^[A-Za-zÀ-ÖØ-öø-ÿ ]{2,99}(-[A-Za-zÀ-ÖØ-öø-ÿ ]{1,98})?$">
         <button id="saveUsername">Enregistrer</button>
     </div>
 
